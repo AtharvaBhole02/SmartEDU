@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { AlertTriangle, Users, TrendingUp, Bell, Calendar, Plus, Download, MessageCircle, Search, Filter, Eye, Mail, Phone } from 'lucide-react';
+import Header from '../Layout/Header';
 
 // Import mock data directly (inline for simplicity)
 const mockStudentData = [
@@ -95,9 +96,14 @@ const Dashboard = () => {
     if (riskScore >= 0.4) return '#F59E0B';
     return '#10B981';
   };
-
+  
   const StatCard = ({ title, value, icon: Icon, color, subtitle, trend, onClick }) => (
-    <div onClick={onClick} className="group backdrop-blur-xl bg-white/10 rounded-2xl shadow-xl p-6 border border-white/20 cursor-pointer hover:bg-white/20 hover:scale-105 transform transition-all duration-300">
+    <div 
+      onClick={onClick} 
+      className="group backdrop-blur-xl bg-slate-800/50 rounded-2xl shadow-lg p-6 
+                 cursor-pointer hover:bg-slate-700/50 hover:scale-105 transform transition-all duration-300
+                 border border-slate-600"
+    >
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-200">{title}</p>
@@ -118,7 +124,13 @@ const Dashboard = () => {
   );
 
   const StudentCard = ({ student, onClick }) => (
-    <div onClick={() => onClick(student)} className="group backdrop-blur-xl bg-white/10 rounded-2xl shadow-xl p-6 border border-white/20 cursor-pointer hover:bg-white/20 hover:scale-105 transform transition-all duration-300" style={{ borderLeft: `4px solid ${getRiskColor(student.riskScore)}` }}>
+    <div 
+      onClick={() => onClick(student)} 
+      className="group backdrop-blur-xl bg-slate-800/50 rounded-2xl shadow-lg p-6 cursor-pointer 
+                 hover:bg-slate-700/50 hover:scale-105 transform transition-all duration-300
+                 border border-slate-600" 
+      style={{ borderLeft: `4px solid ${getRiskColor(student.riskScore)}` }}
+    >
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="font-semibold text-white text-lg">{student.name}</h3>
@@ -143,81 +155,70 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4 text-sm">
-        <div className="backdrop-blur-lg bg-white/20 rounded-xl p-3">
-          <p className="text-gray-300 font-medium">Attendance</p>
-          <p className="font-bold text-lg text-white">{student.attendance}%</p>
+        <div className="backdrop-blur-lg bg-slate-700/30 rounded-xl p-4 border border-slate-600">
+          <p className="text-slate-300 font-medium">Attendance</p>
+          <p className="font-bold text-xl text-white">{student.attendance}%</p>
         </div>
-        <div className="backdrop-blur-lg bg-white/20 rounded-xl p-3">
-          <p className="text-gray-300 font-medium">Avg Grade</p>
-          <p className="font-bold text-lg text-white">{student.avgGrade}%</p>
+        <div className="backdrop-blur-lg bg-slate-700/30 rounded-xl p-4 border border-slate-600">
+          <p className="text-slate-300 font-medium">Avg Grade</p>
+          <p className="font-bold text-xl text-white">{student.avgGrade}%</p>
         </div>
-        <div className="backdrop-blur-lg bg-white/20 rounded-xl p-3">
-          <p className="text-gray-300 font-medium">Behavioral</p>
-          <p className="font-bold text-lg text-white">{student.behavioralScore}/10</p>
+        <div className="backdrop-blur-lg bg-slate-700/30 rounded-xl p-4 border border-slate-600">
+          <p className="text-slate-300 font-medium">Behavioral</p>
+          <p className="font-bold text-xl text-white">{student.behavioralScore}/10</p>
         </div>
-        <div className="backdrop-blur-lg bg-white/20 rounded-xl p-3">
-          <p className="text-gray-300 font-medium">Risk Score</p>
-          <p className="font-bold text-lg text-white">{(student.riskScore * 100).toFixed(1)}%</p>
+        <div className="backdrop-blur-lg bg-slate-700/30 rounded-xl p-4 border border-slate-600">
+          <p className="text-slate-300 font-medium">Risk Score</p>
+          <p className="font-bold text-xl text-white">{(student.riskScore * 100).toFixed(1)}%</p>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-blue-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-blue-500/10 to-violet-500/10 rounded-full blur-3xl animate-pulse"></div>
       </div>
 
-      {/* Header */}
-      <header className="relative backdrop-blur-xl bg-white/10 border-b border-white/20 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-white drop-shadow-lg">SmartEduMine</h1>
-              <p className="text-sm text-white/80">Academic Performance Analyzer & Dropout Risk Predictor</p>
-            </div>
-            <div className="flex items-center space-x-6">
-              <button className="relative p-3 rounded-xl backdrop-blur-lg bg-white/20 hover:bg-white/30 transition-all">
-                <Bell className="h-6 w-6 text-white" />
-                <span className="absolute -top-2 -right-2 h-5 w-5 bg-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">{interventionAlerts}</span>
-              </button>
-              <div className="flex items-center space-x-3 backdrop-blur-lg bg-white/20 rounded-xl px-4 py-2">
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white text-sm font-bold">MA</span>
-                </div>
-                <div>
-                  <span className="text-white font-medium">Mrs. Mohini Avatade</span>
-                  <p className="text-white/80 text-xs">Academic Coordinator</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+  <Header interventionAlerts={interventionAlerts} selectedTab={selectedTab} onTabChange={setSelectedTab} />
+      
+      {/* Navigation moved into Header for a minimal look (kept hidden here) */}
+      <nav className="hidden">
+      </nav>
 
-      {/* Navigation */}
-      <nav className="relative backdrop-blur-xl bg-white/10 border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-1">
+      {/* Main Content */}
+      {/*
+        Add top padding so the fixed header + nav don't overlap the page content.
+        pt-36 provides ~9rem (144px) of top padding which accounts for header + nav.
+        Adjust this value if your header/nav heights change.
+      */}
+      {/* Floating tabs (separate, fixed so they don't scroll with content) */}
+  <div className="fixed inset-x-0 top-10 z-50 pointer-events-none">
+        <div className="flex justify-center">
+          <div className="inline-flex items-center bg-slate-900/50 px-1 py-1 rounded-full shadow-2xl space-x-1 backdrop-blur-sm pointer-events-auto">
             {[
               { key: 'overview', label: 'Overview', icon: Users },
               { key: 'students', label: 'Students', icon: Users },
               { key: 'analytics', label: 'Analytics', icon: TrendingUp },
               { key: 'predictions', label: 'Predictions', icon: AlertTriangle }
             ].map(({ key, label, icon: Icon }) => (
-              <button key={key} onClick={() => setSelectedTab(key)} className={`flex items-center space-x-2 py-4 px-6 font-medium text-sm rounded-t-xl transition-all duration-300 ${selectedTab === key ? 'bg-white/20 text-white border-b-2 border-white transform scale-105' : 'text-white/70 hover:text-white hover:bg-white/10'}`}>
-                <Icon className="h-5 w-5" />
-                <span>{label}</span>
+              <button
+                key={key}
+                onClick={() => setSelectedTab(key)}
+                className={`flex items-center space-x-2 px-3 py-1 text-sm rounded-full transition-all duration-200 ${selectedTab === key ? 'bg-blue-500 text-white shadow-md' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
+                aria-current={selectedTab === key ? 'page' : undefined}
+              >
+                <Icon className="h-4 w-4" />
+                <span className="whitespace-nowrap">{label}</span>
               </button>
             ))}
           </div>
         </div>
-      </nav>
+      </div>
 
-      {/* Main Content */}
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-36">
         {selectedTab === 'overview' && (
           <div className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
